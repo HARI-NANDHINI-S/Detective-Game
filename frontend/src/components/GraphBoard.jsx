@@ -61,7 +61,10 @@ export default function GraphBoard({
       </div>
 
       {/* Red Yarn Strings */}
-      <svg width={width} height={height} style={{ position: "absolute", inset: 0, zIndex: 2 }}>
+      <svg
+        viewBox={`0 0 ${width} ${height}`}
+        style={{ position: "absolute", inset: 0, width: "100%", height: "100%", zIndex: 2 }}
+      >
         <defs>
           <filter id="stringGlow" x="-20%" y="-20%" width="140%" height="140%">
             <feGaussianBlur stdDeviation="3" result="blur" />

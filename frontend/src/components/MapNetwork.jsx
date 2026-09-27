@@ -23,7 +23,11 @@ export default function MapNetwork({
   });
 
   return (
-    <svg width={width} height={height} className="cork" style={{ display: "block" }}>
+    <svg
+      viewBox={`0 0 ${width} ${height}`}
+      className="cork"
+      style={{ display: "block", maxWidth: "100%", height: "auto" }}
+    >
       {edges.map((e, i) => {
         const a = pos[e.a];
         const b = pos[e.b];
