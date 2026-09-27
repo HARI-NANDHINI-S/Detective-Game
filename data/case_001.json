@@ -1,0 +1,144 @@
+{
+  "case_id": "case_001",
+  "title": "The Vanishing of the Chola Bronze",
+  "subtitle": "Meridian Museum of Art - Night of 14 March, 22:40",
+  "briefing": [
+    "At 22:40 last night the alarm on the Gallery display case was bypassed and the Chola Bronze, valued at 4 crore, vanished.",
+    "Five people were inside the museum after closing. Each of them was somewhere between 22:30 and 22:50 - and exactly one of them was standing in the Gallery.",
+    "Collect the physical evidence, interview everyone, then place every suspect on the Evidence Board. The person the board puts in the Gallery is your thief."
+  ],
+  "theft_window": "22:30 - 22:50",
+  "culprit_location": "gallery",
+  "locations": [
+    { "id": "gallery",    "name": "Gallery",       "description": "The main hall. The Chola Bronze stood here. Crime scene." },
+    { "id": "laboratory", "name": "Laboratory",    "description": "Restoration lab. Solvents, tools and the UV bench." },
+    { "id": "archive",    "name": "Archive",       "description": "Climate controlled paper store behind a keypad door." },
+    { "id": "security",   "name": "Security Room", "description": "Monitor wall, badge printer and the alarm panel." }
+  ],
+  "suspects": [
+    {
+      "id": "maya",
+      "name": "Maya",
+      "full_name": "Maya Rao",
+      "role": "Restoration Chemist",
+      "profile": "Handles the museum's solvents. Signed in late, left early, nervous about the audit.",
+      "statement": "Daniel and I were arguing by message all evening, but we were never in the same room. And I did not share a room with Priya either - I would have noticed her.",
+      "constraints": [
+        { "type": "edge", "a": "maya", "b": "daniel", "text": "Maya and Daniel were never in the same room." },
+        { "type": "edge", "a": "maya", "b": "priya", "text": "Maya and Priya were never in the same room." }
+      ]
+    },
+    {
+      "id": "arjun",
+      "name": "Arjun",
+      "full_name": "Arjun Mehta",
+      "role": "Night Security Guard",
+      "profile": "Ten years on the night shift. Keeps to protocol, and to the badge log.",
+      "statement": "Protocol says a guard never stays with a staff member. I kept away from Priya the whole shift, and Daniel and I were never together either.",
+      "constraints": [
+        { "type": "edge", "a": "arjun", "b": "priya", "text": "Arjun and Priya were kept apart by guard protocol." },
+        { "type": "edge", "a": "arjun", "b": "daniel", "text": "Arjun and Daniel were never in the same room." }
+      ]
+    },
+    {
+      "id": "daniel",
+      "name": "Daniel",
+      "full_name": "Daniel Cross",
+      "role": "Visiting Curator",
+      "profile": "Flew in for the bronze exhibition. Asked twice for after-hours access.",
+      "statement": "Victor and I avoid each other - an old auction dispute. We did not spend a single minute in the same room last night.",
+      "constraints": [
+        { "type": "edge", "a": "daniel", "b": "victor", "text": "Daniel and Victor avoided each other all evening." }
+      ]
+    },
+    {
+      "id": "priya",
+      "name": "Priya",
+      "full_name": "Priya Nair",
+      "role": "Chief Archivist",
+      "profile": "Keeps the humidity logs. The only person who never forgets a keypad code.",
+      "statement": "Victor followed me around all week, so I made sure we were never in the same room last night.",
+      "constraints": [
+        { "type": "edge", "a": "priya", "b": "victor", "text": "Priya and Victor were never in the same room." }
+      ]
+    },
+    {
+      "id": "victor",
+      "name": "Victor",
+      "full_name": "Victor Sands",
+      "role": "Donor and Art Dealer",
+      "profile": "Funded the exhibition. Also quietly tried to buy the bronze twice.",
+      "statement": "At twenty to eleven I could see Daniel at one end of the museum and Priya at the other, at the same moment. Wherever they were, it was not the same room.",
+      "constraints": [
+        { "type": "edge", "a": "daniel", "b": "priya", "text": "Daniel and Priya were seen in different rooms at 22:40." }
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "id": "display_case",
+      "object": "Broken Display Case",
+      "name": "Solvent-etched glass",
+      "description": "The case was not smashed. The seal was dissolved with a restoration solvent, then lifted out.",
+      "clue": "The solvent cabinet log records Maya drawing solvent during the theft window. That cabinet stands between the Gallery and the Laboratory - nowhere near the Archive or the Security Room.",
+      "constraints": [
+        { "type": "forbid", "suspect": "maya", "location": "archive", "text": "Solvent cabinet log: Maya could not have been in the Archive." },
+        { "type": "forbid", "suspect": "maya", "location": "security", "text": "Solvent cabinet log: Maya could not have been in the Security Room." }
+      ]
+    },
+    {
+      "id": "camera",
+      "object": "Security Camera",
+      "name": "Corridor footage, 22:30 - 22:50",
+      "description": "The Gallery corridor camera and the Security Room door camera both kept recording.",
+      "clue": "Victor never crosses the Gallery threshold on tape, and Daniel never appears at the Security Room door - and that door is the only way in.",
+      "constraints": [
+        { "type": "forbid", "suspect": "victor", "location": "gallery", "text": "Camera: Victor never entered the Gallery." },
+        { "type": "forbid", "suspect": "daniel", "location": "security", "text": "Camera: Daniel never entered the Security Room." }
+      ]
+    },
+    {
+      "id": "fingerprints",
+      "object": "Fingerprints",
+      "name": "Archive keypad prints",
+      "description": "The Archive keypad must be touched to open the door. Forensics lifted every print on it.",
+      "clue": "Neither Priya's nor Daniel's prints are on last night's layer - so neither of them opened the Archive door.",
+      "constraints": [
+        { "type": "forbid", "suspect": "priya", "location": "archive", "text": "Keypad prints: Priya was not in the Archive." },
+        { "type": "forbid", "suspect": "daniel", "location": "archive", "text": "Keypad prints: Daniel was not in the Archive." }
+      ]
+    },
+    {
+      "id": "footprints",
+      "object": "Footprints",
+      "name": "Wet lab-floor prints",
+      "description": "The Laboratory floor was mopped at 22:20, so every print after that is recorded in the film.",
+      "clue": "Four prints, none of them Arjun's regulation boot. Arjun was never in the Laboratory.",
+      "constraints": [
+        { "type": "forbid", "suspect": "arjun", "location": "laboratory", "text": "Floor prints: Arjun was not in the Laboratory." }
+      ]
+    },
+    {
+      "id": "note",
+      "object": "Torn Note",
+      "name": "Half a humidity slip",
+      "description": "A torn Archive humidity slip, countersigned for the theft window.",
+      "clue": "The slip is countersigned by the person who was inside the Archive, and the signature is definitely not Victor's - he never set foot in there.",
+      "constraints": [
+        { "type": "forbid", "suspect": "victor", "location": "archive", "text": "Humidity slip: Victor was not in the Archive." }
+      ]
+    },
+    {
+      "id": "badge",
+      "object": "Security Badge",
+      "name": "Cloned staff badge",
+      "description": "A blank badge, printed on the museum's own printer, found under the display plinth.",
+      "clue": "It is a clone of a curator-level badge: it opens the display case alarm but leaves no name in the log. It tells us HOW the case was opened - it does not tell us WHO was where. Only the board can do that.",
+      "constraints": []
+    }
+  ],
+  "conclusion": {
+    "how": "The thief printed a blank curator-level badge in the Security Room earlier in the evening, used it to silence the display case alarm, dissolved the case seal with restoration solvent taken from the cabinet outside the Laboratory, lifted the bronze out and walked it into the service corridor.",
+    "why": "The badge, the solvent and the after-hours access requests all point at someone with curator privileges who was standing in the Gallery at 22:40. The Evidence Board leaves exactly one person there."
+  }
+}
