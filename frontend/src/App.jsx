@@ -20,8 +20,8 @@ function Shell() {
   if (error) {
     return (
       <div className="error-banner">
-        Could not reach the FastAPI backend at /api. Start it with:
-        <pre>python -m uvicorn backend_app:app --reload --port 8000</pre>
+        Unable to connect to the game server:
+        <pre>Please refresh the page and try again.</pre>
         {error}
       </div>
     );
