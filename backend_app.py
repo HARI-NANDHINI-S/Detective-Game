@@ -6,6 +6,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 from models.case import load_case, default_case_path
+from algorithms.binary_search import solve_binary_search
+from algorithms.kruskal import solve_kruskal
+from algorithms.knapsack import solve_knapsack
+from algorithms.merge_sort import solve_merge_sort
+from algorithms.dijkstra import solve_dijkstra
 
 
 # ---------------------------------------------------------------------
@@ -66,6 +71,10 @@ class ValidateRequest(BaseModel):
     suspect: str
     location: str
     assignment: dict[str, str] = {}
+
+
+class AlgoCaseRequest(BaseModel):
+    case_id: str = "case_001"
 
 
 # ---------------------------------------------------------------------
@@ -285,3 +294,32 @@ def validate_assignment(request: ValidateRequest):
         ),
         "blame": None,
     }
+
+
+# ---------------------------------------------------------------------
+# Algorithm Solvers
+# ---------------------------------------------------------------------
+
+@app.post("/api/solve/binary-search")
+def solve_binary_search_endpoint(request: AlgoCaseRequest = AlgoCaseRequest()):
+    return solve_binary_search(request.case_id)
+
+
+@app.post("/api/solve/kruskal")
+def solve_kruskal_endpoint(request: AlgoCaseRequest = AlgoCaseRequest()):
+    return solve_kruskal(request.case_id)
+
+
+@app.post("/api/solve/knapsack")
+def solve_knapsack_endpoint(request: AlgoCaseRequest = AlgoCaseRequest()):
+    return solve_knapsack(request.case_id)
+
+
+@app.post("/api/solve/merge-sort")
+def solve_merge_sort_endpoint(request: AlgoCaseRequest = AlgoCaseRequest()):
+    return solve_merge_sort(request.case_id)
+
+
+@app.post("/api/solve/dijkstra")
+def solve_dijkstra_endpoint(request: AlgoCaseRequest = AlgoCaseRequest()):
+    return solve_dijkstra(request.case_id)
